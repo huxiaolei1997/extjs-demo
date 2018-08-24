@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all_1.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all-debug.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN-debug.js"></script>
+<script type="text/javascript">
+	// var objMeterModel = {success: false, objMeterModelList:[]};
+	// var objMeterModelList = objMeterModel.objMeterModelList;
+
+	//  objMeterModelList.push({
+	//  	line : '17',
+	// 	ioa : 16518,
+	// 	value : 1.33,
+	// 	system : '1002'
+	//  });
+	// // for (var i = 0; i < objMeterModelList2.length; i++) {
+		
+	// // }
+	// console.log(JSON.stringify(objMeterModel));
+	Ext.onReady(function() {
+
+		var panel = Ext.create('Ext.form.Panel', {
+			title: '计量数据',
+			width: 600,
+			height: 300,
+			layout: 'column',
+			hidden: false,
+			items: [{
+				xtype: "numberfield",
+				name: "objMeterModelList[0].ioa",
+				fieldLabel: "监测点号",
+				allowBlank: false,
+				allowDecimals: false,
+				columnWidth: 0.3,
+				labelAlign: 'right'
+			},{
+				xtype: "numberfield",
+				name: "objMeterModelList[0].ioa",
+				fieldLabel: "监测点号",
+				allowBlank: false,
+				allowDecimals: false,
+				columnWidth: 0.7,
+				labelAlign: 'right'
+			}],
+			renderTo: Ext.getBody()
+		});
+		panel.getForm().getFields().each(function(test) {
+			console.log(test.columnWidth);
+		});
+		console.log(panel.getForm().getFields());
+
+		var formPanel = Ext.create('Ext.form.Panel', {
+			bodyStyle: "padding:5px 5px 0",
+			border: false,
+			layout: "form",
+			fieldDefaults: {
+			labelWidth: 40,
+			labelAlign: "left"
+		},
+			items : [{
+				xtype: "textfield",
+				fieldLabel: "卡号",
+				name: "cardNumber"
+			}, {
+				xtype: "textfield",
+				inputType: 'password',
+				fieldLabel: "密码",
+				name: "password"
+			}]
+		});
+		
+		var extWindow = Ext.create('Ext.window.Window', {
+			title: '计量数据',
+			width: 600,
+			height: 300,
+			layout: 'form',
+			items:[formPanel],
+			buttons:[{
+				xtype: 'button',
+				text: '保存',
+				handler: function() {
+					//console.log(this.xtype);
+					var form = formPanel.getForm().getValues();
+					console.log(form);
+					// console.log(extWindow.items.itemAt(0).items.itemAt(0).getValue());
+					// console.log(extWindow.items.itemAt(0).items.itemAt(1).getValue());
+
+				}
+			}]
+		});
+
+		extWindow.show();
+	});
+</script>
+</body>
+</html>

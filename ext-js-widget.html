@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all.css" rel="stylesheet">
+	<!-- 要使用 extjs 中的 图表 必须引入下面的 charts-all.css 和 charts.js-->
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/classic/resources/charts-all.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/charts.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		var store = Ext.create('Ext.data.Store', {
+			fields: ['name', 'progress'],
+			data: [{
+				name: 'Lisa',
+				progress: .159,
+				sequence1: [1, 2, 4, 5, 4, 5],
+				sequence2: [1, -2, 4, 5, 4, -5],
+				sequence3: [1, -2, 4, 5, 4, -5]
+			}, {
+				name: 'Bart',
+				progress: .216,
+				sequence1: [1, 2, 4, 5, 4, 5],
+				sequence2: [1, -2, 4, 5, 4, -5],
+				sequence3: [1, -2, 4, 5, 4, -5]
+			}, {
+				name: 'Homer',
+				progress: .55,
+				sequence1: [1, 2, 4, 5, 4, 5],
+				sequence2: [1, -2, 4, 5, 4, -5],
+				sequence3: [1, -2, 4, 5, 4, -5]
+			}, {
+				name: 'Maggie',
+				progress: .167,
+				sequence1: [1, 2, 4, 5, 4, 5],
+				sequence2: [1, -2, 4, 5, 4, -5],
+				sequence3: [1, -2, 4, 5, 4, -5]
+			}, {
+				name: 'Marge',
+				progress: .145,
+				sequence1: [1, 2, 4, 5, 4, 5],
+				sequence2: [1, -2, 4, 5, 4, -5],
+				sequence3: [1, -2, 4, 5, 4, -5]
+			}]
+		});
+
+		Ext.define('My.view.main.DEMO', {
+			extend: 'Ext.grid.Panel',
+			// requires: [
+			// 	'Ext.grid.column.Action',
+			// 	'Ext.ProgressBarWidget',
+			// 	'Ext.slider.Widget',
+			// 	'Ext.sparkline.*'
+			// ],
+			title: '收入分析',
+			store: store,
+			columns: [{
+				text: 'Name',
+				dataIndex: 'name'
+			}, {
+				text: 'progress',
+				xtype: 'widgetcolumn',
+				width: 120,
+				dataIndex: 'progress',
+				widget: {
+					xtype: 'progressbarwidget',
+					textTpl: [
+						'{percent:number("0")}% done'
+					]
+				}
+			}, {
+				text: 'Line',
+				width: 100,
+				dataIndex: 'sequence2',
+				xtype: 'widgetcolumn',
+				widget: {
+					xtype: 'sparklineline',
+					tipTpl: 'Value: {y:number("0.00")}'
+					// textTpl: [
+					// 	'{percent:number("0")}% done'
+					// ]
+				}
+			}, {
+				text: 'Bar',
+				width: 100,
+				dataIndex: 'sequence2',
+				xtype: 'widgetcolumn',
+				widget: {
+					xtype: 'sparklinebar'
+				}
+			}, {
+				text: 'Bullet',
+				width: 100,
+				dataIndex: 'sequence3',
+				xtype: 'widgetcolumn',
+				widget: {
+					xtype: 'sparklinebullet'
+				}
+			}],
+			height: 350,
+			width: 600,
+			renderTo: Ext.getBody()
+		});
+
+		var test = new My.view.main.DEMO();
+
+		Ext.onReady(function() {
+			var panel = Ext.create('Ext.panel.Panel', {
+				id: 'test',
+				title: 'Sparkline',
+				width: 200,
+				height: 200,
+				// items: [{
+				// 	text: 'progress',
+				// 	xtype: 'widgetcolumn',
+				// 	width: 120,
+				// 	dataIndex: 'progress',
+				// 	widget: {
+				// 		xtype: 'progressbarwidget',
+				// 		textTpl: [
+				// 			'{percent:number("0")}% done'
+				// 		]
+				// 	}
+				// }],
+				renderTo: Ext.getBody()
+			});
+
+			var config = {
+				//xtype: 'sparklineline',
+				values: [
+					6, 10, 4, -3, 7, 2
+				],
+				height: 25,
+				width: 100
+			};
+			sparkLine = Ext.create('Ext.sparkline.Line', config);
+			panel.add(sparkLine);
+
+			
+			// 或者这样
+			var config2 = {
+				xtype: 'sparklineline',
+				values: [6, 30, 6, 3, -7, 2],
+				height: 25,
+				width: 100
+			}
+			sparkLine2 = Ext.create(config2);
+			panel.add(sparkLine2);
+		});
+	});
+</script>
+</body>
+</html>

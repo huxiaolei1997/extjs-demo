@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all.css" rel="stylesheet">
+	<!-- 要使用 extjs 中的 图表 必须引入下面的 charts-all.css 和 charts.js-->
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/classic/resources/charts-all.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/charts.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		var pie = Ext.create('Ext.chart.PolarChart', {
+			renderTo: document.body,
+			width: 500,
+			height: 500,
+			store: {
+				fields: ['name', 'g1', 'g2'],
+				data: [{
+					"name": "Item-0",
+					"g1": 18.34,
+					"g2": 0.04
+				}, {
+					"name": "Item-1",
+					"g1": 2.67,
+					"g2": 14.87
+				}, {
+					"name": "Item-2",
+					"g1": 1.90,
+					"g2": 5.72
+				}, {
+					"name": "Item-3",
+					"g1": 21.37,
+					"g2": 2.13
+				}, {
+					"name": "Item-4",
+					"g1": 2.67,
+					"g2": 8.53
+				}, {
+					"name": "Item-5",
+					"g1": 18.22,
+					"g2": 4.62
+				}]
+			},
+
+			interactions: ['rotate'],
+
+			//configure the legend.
+			legend: {
+				docked: 'bottom'
+			},
+
+			//describe the actual pie series.
+			series: [{
+				type: 'pie',
+				xField: 'g1',
+				label: {
+					field: 'name',
+					display: 'rotate'
+				},
+				donut: 25,
+				style: {
+					miterLimit: 10,
+					lineCap: 'miter',
+					lineWidth: 2
+				}
+			}]
+		});
+		var chartWindow = Ext.create('Ext.window.Window', {
+			id : "chartWindow",
+			title: "chartWindow",
+			layout: 'fit',
+			items: [pie]
+		});
+		chartWindow.show();
+	});
+</script>
+</body>
+</html>

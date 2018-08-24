@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all.css" rel="stylesheet">
+    <!-- 要使用 extjs 中的 图表 必须引入下面的 charts-all.css 和 charts.js-->
+    <link href="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/classic/resources/charts-all.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/charts.js"></script>
+<script type="text/javascript">
+    Ext.onReady(function() {
+        var bullet = new Ext.Panel({
+            height: 600,
+            width: 600,
+            frame: true,
+            //title: 'Test Sparklines',
+            //renderTo: document.body,
+            bodyPadding: 10,
+
+            // Named listeners will resolve to methods in this Panel
+            defaultListenerScope: true,
+
+            // Named references will be collected, and can be access from this Panel
+            referenceHolder: true,
+
+            items: [{
+                reference: 'values',
+                xtype: 'textfield',
+                fieldLabel: 'Values',
+                validator: function(v) {
+                    var result = [];
+
+                    v = v.replace(/\s/g, '');
+                    v = v.replace(/,$/, '');
+                    v = v.split(',');
+                    for (var i = 0; i < v.length; i++) {
+                        if (!Ext.isNumeric(v[i])) {
+                            return 'Value must be a comma separated array of numbers';
+                        }
+                        result.push(parseInt(v[i], 10));
+                    }
+                    this.values = result;
+                    return true;
+                },
+                listeners: {
+                    change: 'onTypeChange',
+                    buffer: 500,
+                    afterrender: {
+                        fn: 'afterTypeRender',
+                        single: true
+                    }
+                }
+            }, {
+                reference: 'type',
+                xtype: 'combobox',
+                fieldLabel: 'Type',
+                store: [
+                    ['sparklineline', 'Line'],
+                    ['sparklinebox', 'Box'],
+                    ['sparklinebar', 'Bar'],
+                    ['sparklinebullet', 'Bullet'],
+                    ['sparklinediscrete', 'Discrete'],
+                    ['sparklinepie', 'Pie'],
+                    ['sparklinetristate', 'TriState']
+                ],
+                value: 'sparklineline',
+                listeners: {
+                    change: 'onTypeChange',
+                    buffer: 500
+                }
+            }],
+
+            // Start with a line plot.
+            afterTypeRender: function(typeField) {
+                typeField.setValue('6,10,4,-3,7,2');
+            },
+
+            onTypeChange: function() {
+                var me = this,
+                    refs = me.getReferences(),
+                    config;
+                    console.log(refs);
+                if (me.sparkLine) {
+                    me.remove(me.sparkLine, true);
+                }
+                console.log(refs.type.getValue());
+                config = {
+                    xtype: refs.type.getValue(),
+                    values: refs.values.values,
+                    height: 25,
+                    width: 100
+                };
+                me.sparkLine = Ext.create(config);
+                me.add(me.sparkLine);
+
+                // Put under fields
+                me.sparkLine.el.dom.style.marginLeft = refs.type.labelEl.getWidth() + 'px';
+            }
+        });
+        var chartWindow = Ext.create('Ext.window.Window', {
+            id : "chartWindow",
+            title: "chartWindow",
+            layout: 'fit',
+            items: [bullet]
+        });
+        chartWindow.show();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all.css" rel="stylesheet">
+	<!-- 要使用 extjs 中的 图表 必须引入下面的 charts-all.css 和 charts.js-->
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/classic/resources/charts-all.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/packages/charts/classic/charts.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		Ext.define('MyApp.model.Population', {
+			extend: 'Ext.data.Model',
+			fields: ['year', 'population']
+		});
+
+		Ext.define('MyApp.store.Population', {
+			extend: 'Ext.data.Store',
+			storeId: 'population',
+			model: 'MyApp.model.Population',
+			data: [{
+				"year": "1610",
+				"population": 350
+			}, {
+				"year": "1650",
+				"population": 50368
+			}, {
+				"year": "1700",
+				"population": 250888
+			}, {
+				"year": "1750",
+				"population": 1170760
+			}, {
+				"year": "1800",
+				"population": 5308483
+			}, {
+				"year": "1900",
+				"population": 76212168
+			}, {
+				"year": "1950",
+				"population": 151325798
+			}, {
+				"year": "2000",
+				"population": 281421906
+			}, {
+				"year": "2010",
+				"population": 308745538
+			}]
+		});
+		var store = Ext.create("MyApp.store.Population");
+		Ext.create('Ext.Container', {
+			renderTo: Ext.getBody(),
+			width: 500,
+			height: 500,
+			layout: 'fit',
+			items: [{
+				xtype: 'chart',
+				insetPadding: {
+					top: 60,
+					bottom: 20,
+					left: 20,
+					right: 40
+				},
+				store: store,
+				axes: [{
+					type: 'numeric',
+					position: 'left',
+					grid: true,
+					title: {
+						text: 'Population in Millions',
+						fontSize: 16
+					}
+				}, {
+					type: 'category',
+					title: {
+						text: 'Year',
+						fontSize: 16
+					},
+					position: 'bottom'
+				}],
+				series: [{
+					type: 'bar',
+					xField: 'year',
+					yField: ['population']
+				}],
+				sprites: {
+					type: 'text',
+					text: 'United States Population',
+					font: '25px Helvetica',
+					width: 120,
+					height: 35,
+					x: 100,
+					y: 40
+				}
+			}]
+		});
+	});
+</script>
+</body>
+</html>

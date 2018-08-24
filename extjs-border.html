@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8" />
+	<title>border</title>
+	<link href="https://cdn.bootcss.com/extjs/6.2.0/classic/theme-crisp/resources/theme-crisp-all_1.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/ext-all-debug.js"></script>
+<script src="https://cdn.bootcss.com/extjs/6.2.0/classic/locale/locale-zh_CN-debug.js"></script>
+<script type="text/javascript">
+	Ext.onReady(function() {
+		Ext.create('Ext.panel.Panel', {
+			width: 500,
+			height: 300,
+			title: 'Border Layout',
+			layout: 'border',
+			items: [{
+				title: 'South Region is resizable',
+				region: 'south', // position for region
+				xtype: 'panel',
+				height: 100,
+				split: true, // enable resizing
+				margins: '0 5 5 5'
+			}, {
+				// xtype: 'panel' implied by default
+				title: 'West Region is collapsible',
+				region: 'west',
+				xtype: 'panel',
+				margins: '5 0 0 5',
+				width: 200,
+				collapsible: true, // make collapsible
+				id: 'west-region-container',
+				layout: 'fit'
+			}, {
+				title: 'Center Region',
+				region: 'center', // center region is required, no width/height specified
+				xtype: 'panel',
+				layout: 'fit',
+				margins: '5 5 0 0'
+			}],
+			renderTo: Ext.getBody()
+		});
+	});
+</script>
+</body>
+</html>
