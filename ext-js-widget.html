@@ -78,6 +78,17 @@
 				xtype: 'widgetcolumn',
 				widget: {
 					xtype: 'sparklineline',
+					// 线围成的区域填充的颜色
+					fillColor: '#22AA9C',
+					// 线的颜色
+					lineColor: '#22AA9C',
+					// 最后一个点的颜色
+					spotColor: '#22AA9C',
+					// 线的宽度
+					lineWidth: 0,
+					// 点的半径
+					spotRadius: '0',
+					//spotColor: '#22AA9C',
 					tipTpl: 'Value: {y:number("0.00")}'
 					// textTpl: [
 					// 	'{percent:number("0")}% done'
@@ -102,6 +113,12 @@
 			}],
 			height: 350,
 			width: 600,
+			dockedItems: [{
+				xtype: 'pagingtoolbar',
+				store: store,
+				dock: 'bottom',
+				displayInfo: true
+			}],
 			renderTo: Ext.getBody()
 		});
 
